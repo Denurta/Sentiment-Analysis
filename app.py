@@ -14,6 +14,9 @@ from PIL import Image
 # Get the current directory
 current_dir = Path(__file__).parent if '__file__' in locals() else Path.cwd()
 
+# Print the current directory to verify
+st.write(f"Current directory: {current_dir}")
+
 # Set NLTK data path to the local directory
 nltk_data_path = current_dir / 'nltk_data'
 nltk.data.path.append(str(nltk_data_path))
@@ -74,11 +77,16 @@ st.set_page_config(
 
 # Load the image
 image_path = current_dir / 'image.png'
-image = Image.open(image_path)
+
+try:
+    image = Image.open(image_path)
+except FileNotFoundError:
+    st.error('Image file not found. Please ensure "image.png" is in the correct directory.')
 
 # Sidebar for navigation
 with st.sidebar:
-    st.image(image, width=50)  # Adjust width as needed
+    if 'image' in locals():
+        st.image(image, width=50)  # Adjust width as needed
     selected = option_menu(
         'Sentiment Classifier',
         [
