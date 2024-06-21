@@ -8,11 +8,15 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import nltk
 import time
+import openpyxl
+from pathlib import Path
 
-# Download NLTK data if not already downloaded
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
+# Get the current directory
+current_dir = Path(__file__).parent if '__file__' in locals() else Path.cwd()
+
+# Set NLTK data path to the local directory
+nltk_data_path = current_dir / 'nltk_data'
+nltk.data.path.append(str(nltk_data_path))
 
 # Load Indonesian stopwords
 stop_words_id = set(stopwords.words('indonesian'))
@@ -23,9 +27,8 @@ def clean_text(text):
     return text
 
 # Load model and vectorizer
-working_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(working_dir, 'esg_sentiment_model.sav')
-vectorizer_path = os.path.join(working_dir, 'esg_vectorizer.sav')
+model_path = current_dir / 'esg_sentiment_model.sav'
+vectorizer_path = current_dir / 'esg_vectorizer.sav'
 
 try:
     loaded_model = joblib.load(model_path)
@@ -172,7 +175,7 @@ if selected == 'Batch Analysis':
             st.error('The uploaded file must contain a "Text" column.')
         else:
             start_time = time.time()
-            df['Analysis_Model'] = df['Text'].apply(lambda x: predict_sentiment(clean_text(x)))
+            df['Analysis_Model'] = df['Text'].apply(lambda x: predict_sentiment(cleaned_text(x)))
             df['Analysis_TextBlob'] = df['Text'].apply(predict_sentiment_textblob)
             end_time = time.time()
             prediction_time = end_time - start_time
