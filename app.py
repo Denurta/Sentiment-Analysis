@@ -18,6 +18,11 @@ current_dir = Path(__file__).parent if '__file__' in locals() else Path.cwd()
 nltk_data_path = current_dir / 'nltk_data'
 nltk.data.path.append(str(nltk_data_path))
 
+# Download NLTK data if not already downloaded
+nltk.download('punkt', download_dir=nltk_data_path)
+nltk.download('stopwords', download_dir=nltk_data_path)
+nltk.download('wordnet', download_dir=nltk_data_path)
+
 # Load Indonesian stopwords
 stop_words_id = set(stopwords.words('indonesian'))
 
@@ -140,23 +145,23 @@ if selected == 'Batch Analysis':
         justify-content: space-between;
         margin-bottom: 10px;
         padding: 10px;
-        border: 1px solid #ccc;
+        border: 1px solid #ccc.
     }
     .result-row .text {
         flex: 3;
-        margin-right: 10px;
+        margin-right: 10px.
     }
     .result-row .sentiment {
-        flex: 1;
+        flex: 1.
     }
     .btn {
-        padding: 5px 10px;
-        border: none;
-        color: white;
+        padding: 5px 10px.
+        border: none.
+        color: white.
         cursor: pointer.
     }
     .btn.positive {
-        background-color: green;
+        background-color: green.
     }
     .btn.negative {
         background-color: red.
@@ -175,7 +180,7 @@ if selected == 'Batch Analysis':
             st.error('The uploaded file must contain a "Text" column.')
         else:
             start_time = time.time()
-            df['Analysis_Model'] = df['Text'].apply(lambda x: predict_sentiment(cleaned_text(x)))
+            df['Analysis_Model'] = df['Text'].apply(lambda x: predict_sentiment(clean_text(x)))
             df['Analysis_TextBlob'] = df['Text'].apply(predict_sentiment_textblob)
             end_time = time.time()
             prediction_time = end_time - start_time
