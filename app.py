@@ -8,14 +8,11 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import nltk
 import time
+import openpyxl
 from pathlib import Path
-from PIL import Image
 
 # Get the current directory
 current_dir = Path(__file__).parent if '__file__' in locals() else Path.cwd()
-
-# Print the current directory to verify
-st.write(f"Current directory: {current_dir}")
 
 # Set NLTK data path to the local directory
 nltk_data_path = current_dir / 'nltk_data'
@@ -38,8 +35,6 @@ try:
     loaded_vectorizer = joblib.load(vectorizer_path)
 except FileNotFoundError:
     st.error('Model or vectorizer not found. Please ensure "esg_sentiment_model.sav" and "esg_vectorizer.sav" are in the correct directory.')
-except EOFError:
-    st.error('EOFError: The model file appears to be corrupted. Please check the file and try again.')
 
 # Function to predict sentiment using the loaded model
 def predict_sentiment(text):
@@ -75,18 +70,8 @@ st.set_page_config(
     page_icon="📊"
 )
 
-# Load the image
-image_path = current_dir / 'image.png'
-
-try:
-    image = Image.open(image_path)
-except FileNotFoundError:
-    st.error('Image file not found. Please ensure "image.png" is in the correct directory.')
-
 # Sidebar for navigation
 with st.sidebar:
-    if 'image' in locals():
-        st.image(image, width=50)  # Adjust width as needed
     selected = option_menu(
         'Sentiment Classifier',
         [
