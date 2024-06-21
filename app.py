@@ -8,8 +8,8 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import nltk
 import time
-import openpyxl
 from pathlib import Path
+from PIL import Image
 
 # Get the current directory
 current_dir = Path(__file__).parent if '__file__' in locals() else Path.cwd()
@@ -70,8 +70,13 @@ st.set_page_config(
     page_icon="📊"
 )
 
+# Load the image
+image_path = current_dir / 'image.png'
+image = Image.open(image_path)
+
 # Sidebar for navigation
 with st.sidebar:
+    st.image(image, width=50)  # Adjust width as needed
     selected = option_menu(
         'Sentiment Classifier',
         [
