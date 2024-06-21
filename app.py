@@ -8,6 +8,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import nltk
 import time
+import openpyxl
 
 # Download NLTK data if not already downloaded
 nltk.download('punkt')
