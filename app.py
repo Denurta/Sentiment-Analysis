@@ -8,16 +8,11 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import nltk
 import time
-import openpyxl
 
-# Set NLTK data path to the local directory
-nltk_data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'nltk_data')
-nltk.data.path.append(nltk_data_path)
-
-# Load the data without downloading
-nltk.download('punkt', download_dir=nltk_data_path)
-nltk.download('stopwords', download_dir=nltk_data_path)
-nltk.download('wordnet', download_dir=nltk_data_path)
+# Download NLTK data if not already downloaded
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 # Load Indonesian stopwords
 stop_words_id = set(stopwords.words('indonesian'))
@@ -142,23 +137,23 @@ if selected == 'Batch Analysis':
         justify-content: space-between;
         margin-bottom: 10px;
         padding: 10px;
-        border: 1px solid #ccc.
+        border: 1px solid #ccc;
     }
     .result-row .text {
         flex: 3;
-        margin-right: 10px.
+        margin-right: 10px;
     }
     .result-row .sentiment {
-        flex: 1.
+        flex: 1;
     }
     .btn {
-        padding: 5px 10px.
-        border: none.
-        color: white.
+        padding: 5px 10px;
+        border: none;
+        color: white;
         cursor: pointer.
     }
     .btn.positive {
-        background-color: green.
+        background-color: green;
     }
     .btn.negative {
         background-color: red.
