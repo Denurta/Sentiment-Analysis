@@ -72,7 +72,7 @@ st.set_page_config(
 
 # Sidebar for navigation
 with st.sidebar:
-    logo_path = current_dir / 'logo.png'  # Make sure your logo image is in the current directory
+    logo_path = current_dir / 'logo.jpg'  # Make sure your logo image is in the current directory
     st.image(logo_path, width=50)  # Display the logo image
     st.markdown("<h2>Sentiment Classifier</h2>", unsafe_allow_html=True)
     selected = option_menu(
