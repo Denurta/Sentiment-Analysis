@@ -30,31 +30,23 @@ def clean_text(text):
 model_path = current_dir / 'esg_sentiment_model.sav'
 vectorizer_path = current_dir / 'esg_vectorizer.sav'
 
-loaded_model = None
-loaded_vectorizer = None
-
 try:
     loaded_model = joblib.load(model_path)
     loaded_vectorizer = joblib.load(vectorizer_path)
 except FileNotFoundError:
     st.error('Model or vectorizer not found. Please ensure "esg_sentiment_model.sav" and "esg_vectorizer.sav" are in the correct directory.')
-except EOFError:
-    st.error('Error loading model or vectorizer. The file may be corrupted.')
 
 # Function to predict sentiment using the loaded model
 def predict_sentiment(text):
-    if loaded_model and loaded_vectorizer:
-        text_vector = loaded_vectorizer.transform([text])
-        text_vector_dense = text_vector.toarray()
-        sentiment = loaded_model.predict(text_vector_dense)[0]
-        if sentiment > 0:
-            return 'Positive'
-        elif sentiment < 0:
-            return 'Negative'
-        else:
-            return 'Neutral'
+    text_vector = loaded_vectorizer.transform([text])
+    text_vector_dense = text_vector.toarray()
+    sentiment = loaded_model.predict(text_vector_dense)[0]
+    if sentiment > 0:
+        return 'Positive'
+    elif sentiment < 0:
+        return 'Negative'
     else:
-        return 'Model not loaded'
+        return 'Neutral'
 
 # Function to predict sentiment using TextBlob
 def predict_sentiment_textblob(text):
@@ -80,14 +72,8 @@ st.set_page_config(
 
 # Sidebar for navigation
 with st.sidebar:
-    logo_path = current_dir / 'logo.jpg'  # Make sure your logo image is in the current directory
-    try:
-        st.image(logo_path, width=50)  # Display the logo image
-    except Exception as e:
-        st.warning(f"Logo image could not be loaded: {e}")
-    st.markdown("<h2>Sentiment Classifier</h2>", unsafe_allow_html=True)
     selected = option_menu(
-        '',  # Leave the title empty as we added it manually
+        'Sentiment Classifier',
         [
             'Single Analysis',
             'Batch Analysis',
