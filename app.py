@@ -30,23 +30,31 @@ def clean_text(text):
 model_path = current_dir / 'esg_sentiment_model.sav'
 vectorizer_path = current_dir / 'esg_vectorizer.sav'
 
+loaded_model = None
+loaded_vectorizer = None
+
 try:
     loaded_model = joblib.load(model_path)
     loaded_vectorizer = joblib.load(vectorizer_path)
 except FileNotFoundError:
     st.error('Model or vectorizer not found. Please ensure "esg_sentiment_model.sav" and "esg_vectorizer.sav" are in the correct directory.')
+except EOFError:
+    st.error('Error loading model or vectorizer. The file may be corrupted.')
 
 # Function to predict sentiment using the loaded model
 def predict_sentiment(text):
-    text_vector = loaded_vectorizer.transform([text])
-    text_vector_dense = text_vector.toarray()
-    sentiment = loaded_model.predict(text_vector_dense)[0]
-    if sentiment > 0:
-        return 'Positive'
-    elif sentiment < 0:
-        return 'Negative'
+    if loaded_model and loaded_vectorizer:
+        text_vector = loaded_vectorizer.transform([text])
+        text_vector_dense = text_vector.toarray()
+        sentiment = loaded_model.predict(text_vector_dense)[0]
+        if sentiment > 0:
+            return 'Positive'
+        elif sentiment < 0:
+            return 'Negative'
+        else:
+            return 'Neutral'
     else:
-        return 'Neutral'
+        return 'Model not loaded'
 
 # Function to predict sentiment using TextBlob
 def predict_sentiment_textblob(text):
@@ -147,15 +155,15 @@ if selected == 'Batch Analysis':
     }
     .result-row .text {
         flex: 3;
-        margin-right: 10px;
+        margin-right: 10px.
     }
     .result-row .sentiment {
-        flex: 1;
+        flex: 1.
     }
     .btn {
         padding: 5px 10px;
-        border: none;
-        color: white;
+        border: none.
+        color: white.
         cursor: pointer.
     }
     .btn.positive {
