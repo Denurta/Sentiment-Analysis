@@ -35,6 +35,8 @@ try:
     loaded_vectorizer = joblib.load(vectorizer_path)
 except FileNotFoundError:
     st.error('Model or vectorizer not found. Please ensure "esg_sentiment_model.sav" and "esg_vectorizer.sav" are in the correct directory.')
+except EOFError:
+    st.error('EOFError: The model file appears to be corrupted. Please check the file and try again.')
 
 # Function to predict sentiment using the loaded model
 def predict_sentiment(text):
