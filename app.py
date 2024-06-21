@@ -81,7 +81,10 @@ st.set_page_config(
 # Sidebar for navigation
 with st.sidebar:
     logo_path = current_dir / 'logo.jpg'  # Make sure your logo image is in the current directory
-    st.image(logo_path, width=50)  # Display the logo image
+    try:
+        st.image(logo_path, width=50)  # Display the logo image
+    except Exception as e:
+        st.warning(f"Logo image could not be loaded: {e}")
     st.markdown("<h2>Sentiment Classifier</h2>", unsafe_allow_html=True)
     selected = option_menu(
         '',  # Leave the title empty as we added it manually
@@ -155,15 +158,15 @@ if selected == 'Batch Analysis':
     }
     .result-row .text {
         flex: 3;
-        margin-right: 10px.
+        margin-right: 10px;
     }
     .result-row .sentiment {
-        flex: 1.
+        flex: 1;
     }
     .btn {
         padding: 5px 10px;
-        border: none.
-        color: white.
+        border: none;
+        color: white;
         cursor: pointer.
     }
     .btn.positive {
