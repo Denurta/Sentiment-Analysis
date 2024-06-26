@@ -18,6 +18,9 @@ current_dir = Path(__file__).parent if '__file__' in locals() else Path.cwd()
 nltk_data_path = current_dir / 'nltk_data'
 nltk.data.path.append(str(nltk_data_path))
 
+# Download stopwords if not already downloaded
+nltk.download('stopwords', download_dir=nltk_data_path)
+
 # Load Indonesian stopwords
 stop_words_id = set(stopwords.words('indonesian'))
 
